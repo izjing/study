@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        Function.prototype.call1 = function (context) {
+            context = context || window
+            context.fn = this;
+            var args = [];
+            for(var i = 1; i < arguments.length; i++) {
+                args.push('arguments[' + i + ']'); // eval时可以争取的获取到值
+            }
+            var fn = eval('context.fn(' + args + ')');
+            delete context.fn;
+            return fn
+        }
+        Function.prototype.apply1 = function (context, arr) {
+            context = context || window;
+            context.fn = this;
+            var result;
+            if (arr) {
+                /**
+                * 为什么要用循环而不直接
+                * result = eval('context.fn(' + arr + ')')
+                * 直接用上面代码eval时对arr执行了toString方法，会
+                * 导致传入的数据类型发生改变。
+                */
+                var args = [];
+                for (var i = 0; i < arr.length; i++) {
+                    args.push('arr['+i+']')
+                }
+                result = eval('context.fn(' + args + ')')
+            } else {
+                result = context.fn();
+            }
+            delete context.fn;
+            return result
+        }
+        Function.prototype.bind1 = function (content) {
+            var self = this;
+            var args = Array.prototype.slice.call(arguments, 1);
+            var copyFn = function () {}
+            var bindFn = function () {
+                var bindArgs = Array.prototype.slice.call(arguments);
+                self.apply(this instanceof bindFn ? this : content, args.concat(bindArgs));
+            }
+            copyFn.prototype = this.prototype;
+            bindFn.prototype = new copyFn();
+            return bindFn
+            
+        }
+    </script>
+</body>
+</html>
