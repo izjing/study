@@ -10,7 +10,8 @@
 
 ## 已完成
 
-1. [call、apply实现](https://github.com/mqyqingfeng/Blog/issues/11)，[bind实现](https://github.com/mqyqingfeng/Blog/issues/12)
+1. [call、apply实现](https://github.com/mqyqingfeng/Blog/issues/11)，[bind实现](https://github.com/mqyqingfeng/Blog/issues/12)  (call-apply-bind.html)
+2. 简易实现深复制（jy-clone.html）
 
 
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function isObject(value) {
+            const type = typeof value
+            return value != null && (type === 'object' || type === 'function')
+        }
+        function cloneDeep(obj) {
+            if (!isObject(obj)) {
+                return obj
+            }
+            const root = Array.isArray(obj) ? [] : {};
+            const deeplist = [
+                {
+                    parent: root,
+                    key: undefined,
+                    data: obj,
+                }
+            ]
+            while(deeplist.length) {
+                let { data, key: k, parent } = deeplist.pop();
+                let result = parent;
+                if (typeof k !== 'undefined') {
+                    result = parent[k] = Array.isArray(data) ? [] : {};
+                }
+                for (const key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        if (typeof data[key] === 'object') {
+                            deeplist.push({
+                                parent: result,
+                                key,
+                                data: data[key],
+                            })
+                        } else {
+                            result[key] = data[key];
+                        }
+                    }
+                }
+            }
+            return root
+        }
+    </script>
+</body>
+
+</html>
