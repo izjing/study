@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 防抖
+        function debounce(fn, time, immediate) {
+            var timeOut, result;
+            var debounced = function () {
+                var context = this;
+                var args = arguments;
+                if (immediate) {
+                    var now = !timeOut;
+                    timeOut = setTimeout(() => {
+                        timeOut = null
+                    }, time)
+                    if (now) {
+                        result = fn.apply(context,args);
+                    }
+                    
+                } else {
+                    timeOut = setTimeout(() => {
+                        fn.apply(context,args)
+                    },time)
+                }
+                /*此时注意一点，就是 getUserAction
+                 函数可能是有返回值的，所以我们也要返
+                 回函数的执行结果，但是当 immediate 
+                 为 false 的时候，因为使用了 setTimeout ，
+                 我们将 fn.apply(context, args)
+                 的返回值赋给变量，最后再 return 的时候，
+                 值将会一直是 undefined，
+                 所以我们只在 immediate 为 true
+                 的时候返回函数的执行结果。*/
+                return result
+            }
+            debounce.cancel = function () {
+                clearTimeout(timeOut);
+                timeOut = null;
+            }
+            return debounced
+        }
+    </script>
+</body>
+</html>

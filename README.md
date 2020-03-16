@@ -12,6 +12,7 @@
 
 1. [call、apply实现](https://github.com/mqyqingfeng/Blog/issues/11)，[bind实现](https://github.com/mqyqingfeng/Blog/issues/12)  (call-apply-bind.html)
 2. 简易实现深复制（jy-clone.html）
+3. [防抖实现](https://github.com/mqyqingfeng/Blog/issues/22)(debounce.html)
 
 
 
