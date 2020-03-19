@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class createEventHub {
+            constructor() {
+                this.listevent = {}
+            }
+            on(event, fn) {
+                if (!this.listevent[event]) {
+                    this.listevent[event] = [];
+                } else {
+                    this.listevent[event].push(fn);
+                }
+            }
+            emit(event, data) {
+                (this.listevent[event] || []).forEach(item => item(data))
+            }
+            remove(event, fn) {
+                const i = (this.listevent[event] || []).findIndex(h => h === fn);
+                if (i > -1) {
+                    this.listevent[event].splice(i,1);
+                    
+                }
+            }
+        }
+    </script>
+    
+</body>
+</html>
